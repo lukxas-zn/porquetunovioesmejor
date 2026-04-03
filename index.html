@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Princesita ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent-red: #ff0000;
+            --text-pink: #d63384;
+            --bg-dark: #000000;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-dark);
+            font-family: 'Quicksand', sans-serif;
+            color: white;
+            overflow-x: hidden; /* Evita scroll horizontal */
+        }
+
+        /* --- LUCES ROJAS --- */
+        .atmósfera {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .firefly {
+            position: absolute; background-color: var(--accent-red); border-radius: 50%;
+            box-shadow: 0 0 12px 4px var(--accent-red); opacity: 0;
+            animation: floatLuciérnaga infinite linear, pulsateLuciérnaga 3s infinite ease-in-out;
+        }
+        @keyframes floatLuciérnaga {
+            0% { transform: translateY(110vh); }
+            100% { transform: translateY(-10vh); }
+        }
+        @keyframes pulsateLuciérnaga {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.9; }
+        }
+
+        /* --- CONTRASEÑA --- */
+        #pantalla-pass {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-dark); z-index: 500;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        #pantalla-pass input {
+            background: rgba(255,255,255,0.1); border: 1px solid white; border-radius: 25px;
+            color: white; padding: 12px 20px; text-align: center; outline: none;
+        }
+        #pantalla-pass button { background: white; border: none; padding: 12px 30px; margin-top: 20px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+
+        /* --- CORTINA BLANCA --- */
+        #cortina-rosa {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #ffffff; z-index: 100; display: none;
+            flex-direction: column; align-items: center; overflow-y: auto;
+            transition: transform 1.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+        }
+        #cortina-rosa.rasgada { transform: translateY(-105%); }
+
+        .container { width: 90%; max-width: 450px; text-align: center; padding: 20px; z-index: 10; position: relative; }
+        .btn-pill { padding: 12px 40px; border-radius: 30px; border: 1.5px solid var(--text-pink); cursor: pointer; margin: 10px; background: transparent; color: var(--text-pink); font-weight: 700; }
+        .btn-pill.filled { background: var(--text-pink); color: white; }
+
+        /* --- SECCIÓN DARK (CON PERMISO DE SCROLL) --- */
+        #seccion-oscura { 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+            padding: 50px 20px; 
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Asegura que el body permita scroll cuando se active esta sección */
+        body.modo-lectura { overflow-y: auto; }
+
+        .text-final { 
+            font-family: 'Caveat', cursive; font-size: 1.8rem; line-height: 1.5; 
+            color: white; text-align: left; width: 100%; max-width: 400px;
+            margin-top: 20px;
+            word-wrap: break-word;
+        }
+        .flores-img { width: 85%; max-width: 320px; filter: drop-shadow(0 0 20px var(--accent-red)); }
+
+        #alert-box { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 200; backdrop-filter: blur(5px); }
+        #alert-content { background: white; padding: 30px; border-radius: 20px; text-align: center; color: var(--text-pink); border: 2px solid var(--text-pink); }
+    </style>
+</head>
+<body>
+
+    <div class="atmósfera" id="luces-globales"></div>
+
+    <div id="pantalla-pass">
+        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem;">Hola, mi amor...</h2>
+        <input type="password" id="pass-input" placeholder="La contraseña...">
+        <button onclick="verificarPassword()">Entrar</button>
+    </div>
+
+    <div id="cortina-rosa">
+        <div id="portada" class="container" style="height:90vh; display:flex; flex-direction:column; justify-content:center;">
+            <p style="font-family: 'Dancing Script'; font-size: 2.8rem; color: var(--text-pink);">¿Quieres ver por qué tu novio es mejor?</p>
+            <div style="margin-top: 40px;">
+                <button class="btn-pill filled" onclick="mostrarAlerta('ver')">Ver</button>
+                <button class="btn-pill" onclick="mostrarAlerta('nover')">No</button>
+            </div>
+        </div>
+
+        <div id="lista-razones" class="container" style="display: none; padding-bottom: 100px;">
+            <p style="font-family: 'Dancing Script'; font-size: 2rem; color: var(--text-pink);">Aquí están las razones:</p>
+            <div style="text-align: left; margin: 25px 0; color: #444;">
+                <p>• Porque si</p>
+                <p>• Porque nadie te va amar como yo</p>
+                <p>• Porque soy lo mejor que te va a pasar</p>
+                <p>• Porque te voy a dar todo</p>
+                <p>• Porque voy a cumplir todo loq te prometí</p>
+                <p>• Porque te tendré consentida</p>
+                <p>• Porque te trataré como ninguno te trato</p>
+                <p>• Porque te amaré más que a mí mismo</p>
+            </div>
+            <button class="btn-pill filled" style="background:#000; border-color:#000;" onclick="activarEfectoRasgado()">Ver la realidad</button>
+        </div>
+    </div>
+
+    <div id="seccion-oscura">
+        <img src="flores_dark.png" class="flores-img" style="transform: rotate(180deg);">
+        <h2 style="font-family: 'Dancing Script'; color: var(--accent-red); font-size: 2.2rem;">¿Por qué tu novio es mejor?</h2>
+        <div id="typewriter-text" class="text-final"></div>
+        <div style="height: 100px;"></div> 
+    </div>
+
+    <div id="alert-box">
+        <div id="alert-content">
+            <p id="alert-text" style="font-weight: bold;"></p>
+            <button class="btn-pill filled" onclick="cerrarAlerta()">Continuar</button>
+        </div>
+    </div>
+
+    <audio id="musica-oscura" src="TU_MUSICAA.mp3" loop preload="auto"></audio>
+
+    <script>
+        function generarLuces() {
+            const container = document.getElementById('luces-globales');
+            for(let i=0; i<35; i++) {
+                let f = document.createElement('div');
+                f.className = 'firefly';
+                let s = Math.random() * 5 + 3;
+                f.style.width = s + 'px'; f.style.height = s + 'px';
+                f.style.left = Math.random() * 100 + 'vw';
+                f.style.animationDuration = (Math.random() * 12 + 8) + 's, 3s';
+                f.style.animationDelay = Math.random() * 10 + 's, 0s';
+                container.appendChild(f);
+            }
+        }
+        generarLuces();
+
+        function verificarPassword() {
+            if (document.getElementById('pass-input').value.toLowerCase() === 'miklo') {
+                document.getElementById('pantalla-pass').style.display = 'none';
+                document.getElementById('cortina-rosa').style.display = 'flex';
+            }
+        }
+
+        function mostrarAlerta(tipo) {
+            document.getElementById('alert-text').innerText = (tipo === 'ver') ? "Para qué necesitas ver si sabes que es el mejor..." : "Vas a ver igual";
+            document.getElementById('alert-box').style.display = 'flex';
+        }
+
+        function cerrarAlerta() {
+            document.getElementById('alert-box').style.display = 'none';
+            document.getElementById('portada').style.display = 'none';
+            document.getElementById('lista-razones').style.display = 'block';
+        }
+
+        function activarEfectoRasgado() {
+            const musica = document.getElementById('musica-oscura');
+            musica.play();
+            
+            document.getElementById('seccion-oscura').style.display = 'flex';
+            document.body.classList.add('modo-lectura'); // Habilita el scroll
+            document.getElementById('cortina-rosa').classList.add('rasgada');
+            
+            setTimeout(iniciarEscritura, 1500); 
+        }
+
+        const textoDark = "Pq tu novio va amarte hasta borrar cada gesto de cariño que no fue de el y adorarte como si fuera lo único que existe en este mundo, te haré sentir de la mejor manera posible mi princesita, ponerte en una cajita de cristal para q solo yo pueda apreciarte. Bañarte, cambiarte, peinarte, mirarte, humillarte, solo yo tocarte y verte, pq me encantas demasiadote te voy a amar tanto que no vas a poder olvidarme nunca por que cada alguien te diga o te dedique algo yo ya lo abre hecho antes. Tendré que amarte de todas las maneras posibles al punto q mismo si intentarás algo con alguien más veas que no te amara de esa misma manera enfermiza o loca e intensa en la que yo lo hacía. Aunque lamentablemente si no es conmigo no es con nadie y estarás conmigo para siempre, pase lo que pasé mi amorcito.";
+
+        function iniciarEscritura() {
+            let i = 0;
+            const element = document.getElementById('typewriter-text');
+            function type() {
+                if (i < textoDark.length) {
+                    element.innerHTML += textoDark.charAt(i);
+                    i++;
+                    // Si el texto crece, el scroll se mantiene funcional
+                    setTimeout(type, 45);
+                }
+            }
+            type();
+        }
+    </script>
+</body>
+</html>
