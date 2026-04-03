@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Princesita ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-sweet: #ffb3c1;
+            --pixel-text: #c9184a;
+            --btn-bg: #ff758f;
+            --btn-text: #ffffff;
+            --bg-dark: #000000;
+            --accent-dark: #991b1b;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 1s ease;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            padding: 40px 20px;
+            z-index: 10;
+        }
+
+        .pixel-title {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--pixel-text);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-transform: uppercase;
+        }
+
+        .btn {
+            font-family: 'Quicksand', sans-serif;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 10px;
+            transition: 0.3s;
+        }
+
+        /* --- MODO TIERNO --- */
+        body.sweet-mode { background-color: var(--bg-sweet); }
+        .sweet-mode .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .sweet-mode .btn { background-color: var(--btn-bg); color: var(--btn-text); }
+        .sweet-mode #lista-razones { display: none; }
+        .razon-item {
+            background: rgba(255, 255, 255, 0.7);
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px solid var(--btn-bg);
+            color: #590d22;
+            font-weight: 600;
+        }
+
+        /* --- MODO OSCURO --- */
+        body.dark-mode { background-color: var(--bg-dark); }
+        .dark-mode .titulo-dark {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--accent-dark);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+        .dark-mode .typewriter {
+            font-family: 'Press Start 2P', cursive; /* Letra gordita pixelada */
+            font-size: 0.8rem; /* Tamaño ajustado para que sea legible */
+            line-height: 2;
+            color: #ffffff;
+            text-align: justify;
+        }
+        .destacado { color: var(--accent-dark); }
+
+        /* --- CORAZONES --- */
+        .heart {
+            position: fixed;
+            top: -10vh;
+            color: var(--accent-dark);
+            font-size: 20px;
+            user-select: none;
+            z-index: 5;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+
+        /* --- ALERTAS --- */
+        #alert-box {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1000;
+        }
+        #alert-content {
+            background: var(--bg-sweet); color: var(--pixel-text);
+            padding: 30px; border-radius: 20px; text-align: center; max-width: 400px;
+            border: 4px solid var(--pixel-text); font-family: 'Press Start 2P', cursive; font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body class="sweet-mode">
+
+    <div class="hero" id="portada">
+        <div class="container">
+            <p class="pixel-title">Porque tu novio <br>es mejor q todos ❤️</p>
+            <p style="font-family: 'Press Start 2P'; font-size: 0.6rem; color: #590d22;">¿quieres verlo?</p>
+            <button class="btn" onclick="mostrarAlerta('ver')">Ver</button>
+            <button class="btn" onclick="mostrarAlerta('nover')">No Ver</button>
+        </div>
+    </div>
+
+    <div id="lista-razones" class="container">
+        <h2 class="pixel-title">Porque es el mejor</h2>
+        <div class="razon-item">Pq te va tener consentida</div>
+        <div class="razon-item">Pq es hermoso</div>
+        <div class="razon-item">Pq te va tratar como ningún otro te trato</div>
+        <div class="razon-item">Pq te ama más que todos</div>
+        <div class="razon-item">Pq es tu cachorrito</div>
+        <div class="razon-item">Pq eres lo más valioso q tiene</div>
+        
+        <div style="margin-top:40px; border-top: 2px dashed #ff758f; padding-top:20px;">
+            <p style="font-size:0.8rem; color:#590d22;">Mentira en realidad es por esto...</p>
+            <button class="btn" style="background:#590d22; color:white;" onclick="activarModoOscuro()">Ver la realidad</button>
+        </div>
+    </div>
+
+    <div id="seccion-oscura" class="container" style="display: none;">
+        <h1 class="titulo-dark">¿Porqué tu novio es mejor?</h1>
+        <div class="typewriter" id="typewriter-text"></div>
+    </div>
+
+    <div id="alert-box">
+        <div id="alert-content">
+            <p id="alert-text"></p>
+            <button class="btn" onclick="cerrarAlerta()">Continuar</button>
+        </div>
+    </div>
+
+    <audio id="musica-oscura" src="TU_MUSICA.mp3" preload="auto"></audio>
+
+    <script>
+        const body = document.body;
+        const typewriterTextElement = document.getElementById('typewriter-text');
+        const musica = document.getElementById('musica-oscura');
+
+        const textoDark = "Pq tu novio va amarte hasta borrar cada gesto de cariño que no fue de el y adorarte como si fuera lo único que existe en este mundo, te haré sentir de la mejor manera posible mi princesita, ponerte en una cajita de cristal para q solo yo pueda apreciarte. Bañarte, cambiarte, peinarte, mirarte, humillarte, <span class='destacado'>solo yo tocarte y verte</span>, pq me encantas demasiadote te voy a amar tanto que no vas a poder olvidarme nunca por que cada alguien te diga o te dedique algo yo ya lo abre hecho antes. Tendré que amarte de todas las maneras posibles al punto q mismo si intentarás algo con alguien más veas que no te amara de esa misma manera enfermiza o loca e intensa en la que yo lo hacía. Aunque lamentablemente <span class='destacado'>si no es conmigo no es con nadie</span> y estarás conmigo para siempre, pase lo que pasé mi amorcito.";
+
+        function mostrarAlerta(tipo) {
+            const text = (tipo === 'ver') ? "para que necesitas ver si sabes que es el mejor hasta el lo sabe pero te dejaré verlo" : "vas a ver igual";
+            document.getElementById('alert-text').innerText = text;
+            document.getElementById('alert-box').style.display = 'flex';
+        }
+
+        function cerrarAlerta() {
+            document.getElementById('alert-box').style.display = 'none';
+            document.getElementById('portada').style.display = 'none';
+            document.getElementById('lista-razones').style.display = 'block';
+        }
+
+        function activarModoOscuro() {
+            document.getElementById('lista-razones').style.display = 'none';
+            body.classList.remove('sweet-mode');
+            body.classList.add('dark-mode');
+            document.getElementById('seccion-oscura').style.display = 'block';
+            
+            musica.play().catch(() => {});
+            
+            // Iniciar lluvia de corazones
+            setInterval(createHeart, 300);
+            
+            // Efecto máquina de escribir
+            let i = 0;
+            const textArray = textoDark.split(/(<\/?.+?>)/);
+            let currentHTML = "";
+            
+            const timer = setInterval(() => {
+                if (i < textArray.length) {
+                    if (textArray[i].startsWith("<")) {
+                        currentHTML += textArray[i];
+                    } else {
+                        // Escribir letra por letra dentro de los segmentos de texto
+                        let charIndex = 0;
+                        const chars = textArray[i].split("");
+                        const charTimer = setInterval(() => {
+                            if (charIndex < chars.length) {
+                                currentHTML += chars[charIndex];
+                                typewriterTextElement.innerHTML = currentHTML;
+                                charIndex++;
+                            } else {
+                                clearInterval(charTimer);
+                            }
+                        }, 30);
+                    }
+                    i++;
+                } else { clearInterval(timer); }
+            }, 600);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    </script>
+</body>
+  </html>
+  
