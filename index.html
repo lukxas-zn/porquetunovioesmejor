@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Princesita Samantha ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-sweet: #ffcad4;
+            --pixel-text: #c9184a;
+            --btn-bg: #ff758f;
+            --bg-dark: #000000;
+            --accent-dark: #991b1b;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* --- CONTRASEÑA --- */
+        #pantalla-pass {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-dark); color: white;
+            z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Press Start 2P', cursive; font-size: 0.7rem;
+        }
+        #pantalla-pass input {
+            background: none; border: 2px solid white; border-radius: 10px; color: white;
+            padding: 15px; margin-top: 20px; font-family: 'Press Start 2P'; font-size: 1rem; text-align: center;
+        }
+        #pantalla-pass button { background: white; border: none; padding: 15px 30px; margin-top: 20px; cursor: pointer; font-weight: bold; border-radius: 50px; }
+
+        /* --- CORTINA ROSA --- */
+        #cortina-rosa {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(180deg, #ffcad4 0%, #fbc4ab 100%);
+            z-index: 100; display: none;
+            flex-direction: column; align-items: center; overflow-y: auto; overflow-x: hidden;
+            transition: transform 1.8s cubic-bezier(0.65, 0.05, 0.36, 1);
+        }
+        #cortina-rosa::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 80px;
+            background-image: url('rasgadura.png'); background-size: contain; background-repeat: repeat-x; z-index: 110;
+        }
+        #cortina-rosa.rasgada { transform: translateY(-105%); }
+
+        /* --- MARIPOSAS --- */
+        .mariposa {
+            position: absolute; font-size: 30px; z-index: 150;
+            pointer-events: none;
+            animation: volar 8s infinite ease-in-out;
+        }
+        @keyframes volar {
+            0% { transform: translate(-10vw, 80vh) rotate(0deg); opacity: 0; }
+            20% { opacity: 1; }
+            50% { transform: translate(50vw, 20vh) rotate(20deg); }
+            80% { opacity: 1; }
+            100% { transform: translate(110vw, 50vh) rotate(-10deg); opacity: 0; }
+        }
+
+        .container { width: 90%; max-width: 500px; text-align: center; padding: 20px; z-index: 10; margin-top: 30px; }
+        .pixel-font { font-family: 'Press Start 2P', cursive; text-transform: uppercase; line-height: 1.8; }
+        .btn { padding: 15px 25px; border-radius: 50px; border: none; font-size: 1rem; font-weight: 700; cursor: pointer; margin: 10px; background-color: var(--btn-bg); color: white; }
+
+        /* --- FLORES --- */
+        .flores-cute { width: 80%; max-width: 300px; margin: 20px 0; }
+        .flores-dark-container { transform: rotate(180deg); margin-bottom: 30px; }
+        .flores-dark { width: 70%; max-width: 250px; filter: brightness(0.5) drop-shadow(0 0 10px var(--accent-dark)); }
+
+        /* --- MODO DARK --- */
+        #seccion-oscura { position: relative; z-index: 10; display: none; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        .typewriter { color: #ffffff; font-size: 0.75rem; line-height: 2.3; text-align: left; }
+        .destacado { color: var(--accent-dark); font-weight: bold; }
+
+        #alert-box { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 200; }
+        #alert-content { background: #fff0f3; padding: 25px; border-radius: 15px; border: 4px solid var(--pixel-text); text-align: center; color: var(--pixel-text); }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-pass">
+        <p>Introduce la seña...</p>
+        <input type="password" id="pass-input" placeholder="********">
+        <button onclick="verificarPassword()">Confirmar</button>
+    </div>
+
+    <div id="cortina-rosa">
+        <div class="mariposa">🦋</div> <div id="portada" class="container" style="height:85vh; display:flex; flex-direction:column; justify-content:center;">
+            <p class="pixel-font" style="color: var(--pixel-text);">Samantha... ¿quieres ver por qué tu novio es mejor q todos? ❤️</p>
+            <div>
+                <button class="btn" onclick="mostrarAlerta('ver')">Ver</button>
+                <button class="btn" onclick="mostrarAlerta('nover')" style="background:white; color:var(--pixel-text)">No Ver</button>
+            </div>
+        </div>
+
+        <div id="lista-razones" class="container" style="display: none;">
+            <h2 class="pixel-font" style="color: var(--pixel-text); font-size: 0.8rem;">Pq te amo mucho Samantha!</h2>
+            <div style="background:rgba(255,255,255,0.3); padding:15px; border-radius:15px;">
+                <p>❤️ Pq te va tener consentida</p>
+                <p>❤️ Pq es tu cachorrito</p>
+                <p>❤️ Pq eres lo más valioso</p>
+            </div>
+            <img src="flores_cute.png" class="flores-cute">
+            <p style="color: #590d22;">Mentira en realidad es por esto...</p>
+            <button class="btn" style="background:#590d22;" onclick="activarEfectoRasgado()">Ver la realidad</button>
+        </div>
+    </div>
+
+    <div id="seccion-oscura" class="container">
+        <div class="mariposa" style="filter: grayscale(1) brightness(2);">🦋</div> <div class="flores-dark-container">
+            <img src="flores_dark.png" class="flores-dark">
+        </div>
+        <h1 class="pixel-font" style="color:var(--accent-dark); font-size:0.9rem;">¿Porqué tu novio es mejor?</h1>
+        <div id="typewriter-text" class="pixel-font typewriter"></div>
+    </div>
+
+    <div id="alert-box">
+        <div id="alert-content">
+            <p id="alert-text" class="pixel-font" style="font-size:0.6rem;"></p>
+            <button class="btn" onclick="cerrarAlerta()">Continuar</button>
+        </div>
+    </div>
+
+    <audio id="musica-oscura" src="TU_MUSICAA.mp3" preload="auto"></audio>
+
+    <script>
+        function verificarPassword() {
+            if (document.getElementById('pass-input').value.toLowerCase() === 'miklo') {
+                document.getElementById('pantalla-pass').style.display = 'none';
+                document.getElementById('cortina-rosa').style.display = 'flex';
+            }
+        }
+
+        function mostrarAlerta(tipo) {
+            document.getElementById('alert-text').innerText = (tipo === 'ver') ? "para que necesitas ver si sabes que es el mejor..." : "vas a ver igual";
+            document.getElementById('alert-box').style.display = 'flex';
+        }
+
+        function cerrarAlerta() {
+            document.getElementById('alert-box').style.display = 'none';
+            document.getElementById('portada').style.display = 'none';
+            document.getElementById('lista-razones').style.display = 'block';
+            document.getElementById('cortina-rosa').style.overflowY = 'auto';
+        }
+
+        function activarEfectoRasgado() {
+            // MÚSICA COMIENZA AL APRETAR EL BOTÓN
+            document.getElementById('musica-oscura').play();
+            
+            document.getElementById('seccion-oscura').style.display = 'flex';
+            document.getElementById('cortina-rosa').classList.add('rasgada');
+            setTimeout(iniciarEscritura, 1500); 
+        }
+
+        const textoDark = "Pq tu novio va amarte hasta borrar cada gesto de cariño que no fue de el... <span class='destacado'>solo yo tocarte y verte</span>... <span class='destacado'>si no es conmigo no es con nadie</span>.";
+
+        function iniciarEscritura() {
+            let i = 0;
+            const element = document.getElementById('typewriter-text');
+            function type() {
+                if (i < textoDark.length) {
+                    if (textoDark.slice(i, i+1) === '<') {
+                        let end = textoDark.indexOf('>', i);
+                        element.innerHTML += textoDark.slice(i, end+1);
+                        i = end + 1;
+                    } else {
+                        element.innerHTML += textoDark.charAt(i);
+                        i++;
+                    }
+                    setTimeout(type, 40);
+                }
+            }
+            type();
+        }
+    </script>
+</body>
+  </html>
+  
