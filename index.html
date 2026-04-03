@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Princesita ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-sweet: #ffcad4;
+            --text-main: #4a4a4a;
+            --accent-pink: #ff758f;
+            --bg-dark: #000000;
+            --firefly: #ffee80;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
+            min-height: 100vh;
+            background-color: var(--bg-dark);
+            overflow: hidden;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        /* --- EFECTO LUCIÉRNAGAS GLOBAL --- */
+        .atmósfera {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .firefly {
+            position: absolute; background-color: var(--firefly); border-radius: 50%;
+            box-shadow: 0 0 10px 3px var(--firefly); opacity: 0;
+            animation: floatLuciérnaga infinite linear, pulsateLuciérnaga 3s infinite ease-in-out;
+        }
+        @keyframes floatLuciérnaga {
+            0% { transform: translateY(110vh); }
+            100% { transform: translateY(-10vh); }
+        }
+        @keyframes pulsateLuciérnaga {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* --- CONTRASEÑA --- */
+        #pantalla-pass {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: var(--bg-dark); color: white;
+            z-index: 500; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center;
+        }
+        #pantalla-pass h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; margin-bottom: 20px; }
+        #pantalla-pass input {
+            background: rgba(255,255,255,0.1); border: 1px solid white; border-radius: 25px; color: white;
+            padding: 12px 20px; font-size: 1.1rem; text-align: center; outline: none;
+        }
+        #pantalla-pass button { 
+            background: white; border: none; padding: 12px 30px; margin-top: 20px; 
+            cursor: pointer; border-radius: 25px; font-weight: bold; font-family: 'Quicksand';
+        }
+
+        /* --- CORTINA ROSA (INICIO) --- */
+        #cortina-rosa {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #ffffff; /* Fondo blanco limpio estilo Canva */
+            z-index: 100; display: none;
+            flex-direction: column; align-items: center; overflow-y: auto;
+            transition: transform 1.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+        }
+        #cortina-rosa.rasgada { transform: translateY(-105%); }
+        
+        /* Imagen de rasgadura abajo */
+        #cortina-rosa::after {
+            content: ''; position: absolute; bottom: -2px; left: 0; width: 100%; height: 60px;
+            background-image: url('rasgadura.png'); background-size: cover; z-index: 110;
+        }
+
+        /* --- ESTILO DE TEXTOS --- */
+        .titulo-hand { font-family: 'Dancing Script', cursive; font-size: 3.2rem; color: #d63384; margin: 0; }
+        .subtitulo { font-family: 'Quicksand', sans-serif; font-weight: 300; letter-spacing: 1px; color: #6c757d; font-size: 0.9rem; }
+        
+        .container { width: 90%; max-width: 450px; text-align: center; padding: 20px; z-index: 10; position: relative; }
+        
+        /* Botones estilo Pill (Canva) */
+        .btn-pill { 
+            padding: 12px 35px; border-radius: 30px; border: 1.5px solid #d63384; 
+            font-size: 0.85rem; font-weight: 700; cursor: pointer; margin: 10px;
+            background: transparent; color: #d63384; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+        .btn-pill.filled { background: #d63384; color: white; }
+
+        /* --- LISTA DE RAZONES --- */
+        .lista-limpia { text-align: left; margin: 30px 0; }
+        .lista-limpia p { 
+            font-family: 'Quicksand', sans-serif; font-size: 1.05rem; color: #444;
+            margin: 18px 0; font-weight: 500; border-bottom: 1px solid #eee; padding-bottom: 8px;
+        }
+
+        /* --- SECCIÓN DARK --- */
+        #seccion-oscura { 
+            position: relative; z-index: 10; display: none; 
+            flex-direction: column; align-items: center; justify-content: center; 
+            min-height: 100vh; padding: 30px; 
+        }
+        .text-final { 
+            font-family: 'Caveat', cursive; font-size: 1.6rem; line-height: 1.4; 
+            color: white; text-align: left; max-width: 400px;
+        }
+        .flores-img { width: 80%; max-width: 300px; margin-bottom: 20px; filter: drop-shadow(0 0 15px var(--firefly)); }
+    </style>
+</head>
+<body>
+
+    <div class="atmósfera" id="luces-globales"></div>
+
+    <div id="pantalla-pass">
+        <h2>Hola, mi amor...</h2>
+        <input type="password" id="pass-input" placeholder="La contraseña...">
+        <button onclick="verificarPassword()">Entrar</button>
+    </div>
+
+    <div id="cortina-rosa">
+        <div id="portada" class="container" style="height:90vh; display:flex; flex-direction:column; justify-content:center;">
+            <p class="titulo-hand">Hello My Love!</p>
+            <p class="subtitulo">do you want to see your gift?</p>
+            <div style="margin-top: 40px;">
+                <button class="btn-pill filled" onclick="mostrarAlerta('ver')">Yes, please</button>
+                <button class="btn-pill" onclick="mostrarAlerta('nover')">No, thanks</button>
+            </div>
+        </div>
+
+        <div id="lista-razones" class="container" style="display: none; padding-bottom: 100px;">
+            <p class="subtitulo" style="text-transform: uppercase;">Aquí están las razones</p>
+            <div class="lista-limpia">
+                <p>Porque si</p>
+                <p>Porque nadie te va amar como yo</p>
+                <p>Porque soy lo mejor que te va a pasar</p>
+                <p>Porque te voy a dar todo</p>
+                <p>Porque voy a cumplir todo loq te prometí</p>
+                <p>Porque te tendré consentida</p>
+                <p>Porque te trataré como ninguno te trato</p>
+                <p>Porque te amaré más que a mí mismo</p>
+            </div>
+            <img src="flores_cute.png" style="width: 70%; margin: 20px 0;">
+            <p style="font-family: 'Caveat'; font-size: 1.4rem; color: #d63384;">Mentira, en realidad es por esto...</p>
+            <button class="btn-pill filled" style="background:#000; border-color:#000;" onclick="activarEfectoRasgado()">Ver la realidad</button>
+        </div>
+    </div>
+
+    <div id="seccion-oscura" class="container">
+        <img src="flores_dark.png" class="flores-img" style="transform: rotate(180deg);">
+        <p class="subtitulo" style="color:var(--firefly); margin-bottom:20px;">¿Por qué tu novio es mejor?</p>
+        <div id="typewriter-text" class="text-final"></div>
+    </div>
+
+    <audio id="musica-oscura" src="TU_MUSICAA.mp3" preload="auto"></audio>
+
+    <script>
+        // Generar luces desde el inicio
+        function generarLuces() {
+            const container = document.getElementById('luces-globales');
+            for(let i=0; i<35; i++) {
+                let f = document.createElement('div');
+                f.className = 'firefly';
+                let s = Math.random() * 5 + 2;
+                f.style.width = s + 'px'; f.style.height = s + 'px';
+                f.style.left = Math.random() * 100 + 'vw';
+                f.style.animationDuration = (Math.random() * 15 + 10) + 's, 3s';
+                f.style.animationDelay = Math.random() * 10 + 's, 0s';
+                container.appendChild(f);
+            }
+        }
+        generarLuces();
+
+        function verificarPassword() {
+            if (document.getElementById('pass-input').value.toLowerCase() === 'miklo') {
+                document.getElementById('pantalla-pass').style.display = 'none';
+                document.getElementById('cortina-rosa').style.display = 'flex';
+            }
+        }
+
+        function mostrarAlerta(tipo) {
+            document.getElementById('portada').style.display = 'none';
+            document.getElementById('lista-razones').style.display = 'block';
+        }
+
+        function activarEfectoRasgado() {
+            document.getElementById('musica-oscura').play();
+            document.getElementById('seccion-oscura').style.display = 'flex';
+            document.getElementById('cortina-rosa').classList.add('rasgada');
+            setTimeout(iniciarEscritura, 1500); 
+        }
+
+        const textoDark = "Pq tu novio va amarte hasta borrar cada gesto de cariño que no fue de el y adorarte como si fuera lo único que existe en este mundo... te voy a amar tanto que no vas a poder olvidarme nunca. Si no es conmigo no es con nadie mi amor.";
+
+        function iniciarEscritura() {
+            let i = 0;
+            const element = document.getElementById('typewriter-text');
+            function type() {
+                if (i < textoDark.length) {
+                    element.innerHTML += textoDark.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            type();
+        }
+    </script>
+</body>
+</html>
